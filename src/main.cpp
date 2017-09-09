@@ -42,11 +42,11 @@ set<pair<COutPoint, unsigned int> > setStakeSeen;
 CBigNum bnProofOfStakeLimit(~uint256(0) >> 20);
 CBigNum bnProofOfStakeLimitV2(~uint256(0) >> 48);
 
-int nStakeMinConfirmations = 100;
-unsigned int nStakeMinAge = 48 * 60 * 60; // 48 hours
+int nStakeMinConfirmations = 50;
+unsigned int nStakeMinAge = 8 * 60 * 60; // 48 hours
 unsigned int nModifierInterval = 10 * 60; // time to elapse before new modifier is computed
 
-int nCoinbaseMaturity = 100;
+int nCoinbaseMaturity = 50;
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 
@@ -971,21 +971,21 @@ static CBigNum GetProofOfStakeLimit(int nHeight)
 // miner's coin base reward
 int64_t GetProofOfWorkReward(int64_t nFees, int nHeight)
 {
-    int64_t nSubsidy = 0 * COIN;
+    int64_t nSubsidy = 10000 * COIN;
 		 
-	if (nHeight <= 25)
+	if (nHeight <= 5)
 			nSubsidy = 4000000 * COIN;
 	 
-	else if (nHeight < 200)  
-			nSubsidy = 0 * COIN;
+	else if (nHeight < 10)  
+			nSubsidy = 200 * COIN;
 			
-	else if (nHeight < 43400)  //aprox 1 month, reward halves
+	else if (nHeight < 15)  //aprox 1 month, reward halves
 			nSubsidy = 100 * COIN;
 			
-	else if (nHeight < 86400)  //aprox 1 month, reward halves
+	else if (nHeight < 20)  //aprox 1 month, reward halves
 			nSubsidy = 50 * COIN;		
 	
-	else if (nHeight < 129600)  //aprox 1 month , reward halves
+	else if (nHeight < 25)  //aprox 1 month , reward halves
 			nSubsidy = 25 * COIN; 
 			
 	else
@@ -1000,15 +1000,15 @@ int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, i
 {
     int64_t nSubsidy;
     if (IsProtocolV3(pindexPrev->nTime)){
-        if (nHeight < 50000)
+        if (nHeight < 20)
 			nSubsidy = COIN * 40;
 		
 		
-		else if (nHeight < 100000)
+		else if (nHeight < 100)
 			nSubsidy = COIN * 40 / 2;   //POS HALVING
 		
 		
-		else if (nHeight < 150000)
+		else if (nHeight < 1000)
 			nSubsidy = COIN * 20 / 2;   //POS HALVING
 		
 		else

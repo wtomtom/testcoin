@@ -48,13 +48,13 @@ public:
         // The message start string is designed to be unlikely to occur in normal data.
         // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
         // a large 4-byte int at any alignment.
-        pchMessageStart[0] = 0x50;
-        pchMessageStart[1] = 0x33;
-        pchMessageStart[2] = 0x24;
-        pchMessageStart[3] = 0x12;
-        vAlertPubKey = ParseHex("0419bce1bac0d543f104cbff2bd23680056a3b9ea05e1137d2ff90eeb5e08472eb500322593a2cb06fbf8297d7beb6cd30cb90f98153b5b7cce1493749e41e0284");
-        nDefaultPort = 18154;
-        nRPCPort = 18155;
+        pchMessageStart[0] = 0x76;
+        pchMessageStart[1] = 0x38;
+        pchMessageStart[2] = 0x26;
+        pchMessageStart[3] = 0x18;
+        vAlertPubKey = ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f");
+        nDefaultPort = 518154;
+        nRPCPort = 518155;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
 
         const char* pszTimestamp = "Testcoin tomtomcoin";
@@ -64,35 +64,40 @@ public:
         std::vector<CTxOut> vout;
         vout.resize(1);
         vout[0].SetEmpty();
-        CTransaction txNew(1, 1490904285, vin, vout, 0);
+        CTransaction txNew(0, 1504901405, vin, vout, 0);
         genesis.vtx.push_back(txNew);
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime    = 1504888659;
+        genesis.nTime    = 1504901405;
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce   = 0;
+        genesis.nNonce   = 563596;
  
- 
+		//printf("MainNet GenesisBlockHash %s\n", genesis.GetHash().ToString().c_str());
+        //printf("MainNet GenesisBlock %s\n", hashGenesisBlock.ToString().c_str());
+        //printf("MainNet Hashmerkleroot %s\n", genesis.hashMerkleRoot.ToString().c_str());
+      
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x00000d905bbbb5a24638a87d12f36033e50669f8e75cec2f737cb968c38e6ddc"));
-        assert(genesis.hashMerkleRoot == uint256("0xa54cbec479649b7bffa1859c3e46d131d2961a24a97589eedf20d88c6486e0d6"));
+        assert(hashGenesisBlock == uint256("0xb8ae6f6288868cc5eb8299a4da72c1da9e148d1f43a5ef8d84f33932d8c49c78"));
+        assert(genesis.hashMerkleRoot == uint256("0x6c30ea33461aa1593c22abc575809f29cbdf69b4300ae17b10dec6f8ce646c7f"));
 		
-		 printf("MainNet GenesisBlockHash %s\n", genesis.GetHash().ToString().c_str());
-         printf("MainNet GenesisBlock %s\n", hashGenesisBlock.ToString().c_str());
-         printf("MainNet Hashmerkleroot %s\n", genesis.hashMerkleRoot.ToString().c_str());
- 
+		  
+       // printf("Mainnet genesis.nTime = %u \n", genesis.nTime);
+        // printf("Mainnet genesis.nNonce = %u \n", genesis.nNonce);
+// printf("Mainnet genesis.GetHash = %s\n", genesis.GetHash().ToString().c_str());
+		
+		 
 	vSeeds.push_back(CDNSSeedData("testcoinnode.servep2p.com", "testcoinnode1.servep2p.com"));
  
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 71); //V
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 132); //v
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 65); //T
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1, 127); //t
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1, 153);
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
  
         convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
  
-        nLastPOWBlock = 260000; //aprox 6 months, then its PURE POS.
+        nLastPOWBlock = 25; //aprox 6 months, then its PURE POS.
     }
  
     virtual const CBlock& GenesisBlock() const { return genesis; }
